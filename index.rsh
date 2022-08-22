@@ -2,43 +2,59 @@
 
 // define Participant
 const RSVPParticipant = {
-  hasTokens: Fun([], UInt),
-  wantsTokens: Fun([],UInt),
-  getReceipt: Fun([UInt], Null)
+  getReceipt: Fun([UInt], Null),
 };
 
 // define main function
 export const main = Reach.App(() => {
   const Buyer = Participant('Buyer',{
-    ...RSVPParticipant
+    ...RSVPParticipant,
+    wantsTokens: Fun([],UInt),
+    acceptTokenCost: Fun([UInt],Null)
   });
-
+  
   const Seller = Participant('Seller', {
     ...RSVPParticipant,
+    hasTokens: Fun([], UInt),
+    currTokenCost: Fun([], UInt),
+    confirmInventory: Fun([UInt],Null)
   });
   init();
 
-  Seller.only(() => {
-    const sellerTokens = declassify(interact.hasTokens())
+  Buyer.only(() => {
+    const wantedTokens = declassify(interact.wantsTokens());
   });
-  Seller.publish(sellerTokens);
+  Buyer.publish(wantedTokens);
+
+  commit();
+
+  Seller.only(() => {
+    const sellerTokens = declassify(interact.hasTokens());
+    const currTokenCost = declassify(interact.currTokenCost());
+  });
+  Seller.publish(currTokenCost,sellerTokens);
 
   commit();
 
   Buyer.only(() => {
-    const buyerTokens = declassify(interact.wantsTokens());
+    declassify(interact.acceptTokenCost(currTokenCost));
   });
-  Buyer.publish(buyerTokens);
+  Buyer.pay(currTokenCost);
 
-  const remTokens = sellerTokens - buyerTokens;
-
+  transfer(currTokenCost).to(Seller);
   commit();
 
-  each([Buyer, Seller], () => {
-    interact.getReceipt(remTokens);
+        
+  const totalTokenCost = wantedTokens * currTokenCost;
+  const remTokens = sellerTokens - wantedTokens;
+
+  Buyer.only( () => {
+    interact.getReceipt(totalTokenCost);
   })
 
-
+  Seller.only(() => {
+    interact.confirmInventory(remTokens);
+  })
 
 });
 
