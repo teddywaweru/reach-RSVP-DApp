@@ -46,14 +46,14 @@ export const main = Reach.App(() => {
 
 
 // define actions for Alice
-Alice.only(() => {
-    const bookRsvp = declassify(interact.bookRsvp);
-    const deadline = declassify(interact.deadline);
+// Alice.only(() => {
+//     const bookRsvp = declassify(interact.bookRsvp);
+//     const deadline = declassify(interact.deadline);
 
-});
+// });
 
-Alice.published(bookRsvp, deadline)
-    .pay(wager);
-commit();
+// Alice.published(bookRsvp, deadline)
+//     .pay(wager);
+// commit();
 
 // Define responses from back-end 

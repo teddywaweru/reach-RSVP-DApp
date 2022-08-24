@@ -1,38 +1,21 @@
-
-import React from "react";
-import { renderDOM, renderView } from "./front-end/views/render"
-// import { loadStdLib } from '@reach-sh/stdlib';
-// const reach = loadStdLib(process.env);
+import React from 'react';
+import AppViews from './views/AppViews';
+import CheckRSVPViews from './views/DeployerViews';
+import GetRSVPViews from './views/AttacherViews';
+import {renderDOM, renderView} from './views/render';
 import './index.css';
-
-import AppViews from './front-end/views/AppViews'
-
-// const { standardUnit } = reach;
-
-// const defaults = {defaultFundAmt: '10', defaultWager: '3', standardUnit};
-const defaults = {defaultFundAmt: '10', defaultWager: '3'};
-
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      view:"HomePage",
-      ...defaults
-    }
-  }
-
-
-  render() { return renderView(this,AppViews);}
-}
-
-
-renderDOM(<App />)
+import * as backend from './build/index.main.mjs';
+import { loadStdlib } from '@reach-sh/stdlib';
+const reach = loadStdlib(process.env);
 
 
 
-// List of possible views
-// 1. Provide acct info
-// 2. Place order for <RSVP
-// 3. Timer till due Date & fast forward
-// 4. Provide token details
-// 5. confirm token details
+
+
+
+
+
+
+
+
+renderDOM(<App />);

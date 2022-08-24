@@ -1,19 +1,11 @@
 import ReactDOM from 'react-dom';
-import { createRoot } from 'react-dom/client';
 import React from 'react';
 
 export function renderDOM(app) {
-  const container = document.getElementById('root');
-  const root = createRoot(container);
-  root.render(
-    <React.StrictMode>
-      {app}
-    </React.StrictMode>
+  ReactDOM.render(
+    <React.StrictMode>{app}</React.StrictMode>,
+    document.getElementById('root')
   );
-  // ReactDOM.render(
-  //   <React.StrictMode>{app}</React.StrictMode>,
-  //   document.getElementById('root')
-  // );
 }
 
 export function renderView(parent, Views) {
@@ -27,4 +19,3 @@ export function renderView(parent, Views) {
   const content = <View {...props} />;
   return <Wrapper {...{content}} />;
 }
-

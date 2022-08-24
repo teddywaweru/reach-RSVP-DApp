@@ -1,10 +1,6 @@
 import React from 'react';
-import '../styles/AppViews.css';
 
 const exports = {};
-
-
-
 
 exports.Wrapper = class extends React.Component {
   render() {
@@ -12,83 +8,95 @@ exports.Wrapper = class extends React.Component {
     return (
       <div className="App">
         <header className="App-header" id="root">
-          <h1>Place your RSVP</h1>
+          <h1>Request for your RSVP</h1>
           {content}
         </header>
       </div>
     );
   }
 }
-exports.HomePage = class extends React.Component {
-  render() {
-    return(
-      <div>
-        <p>Hey there Newbie!</p>
-      </div>
-    );
-  }
-}
 
-exports.ConnectAccount = class extends React.Component {
+
+exports.SignInAccount = class extends React.Component {
   render() {
     return (
-      <div>
-        Please wait while we connect to your account.
-        If this takes more than a few seconds, there may be something wrong.
+      <div> 
+        <label>Enter your Email</label>
+        <input 
+          type='text'
+          placeholder=''
+        />
+        <label>Enter your password</label>
+        <input 
+          type='password'
+          placeholder=''
+        />
+        <button> Sign In </button>
       </div>
     )
   }
 }
 
-exports.FundAccount = class extends React.Component {
-  render() {
-    const {bal, standardUnit, defaultFundAmt, parent} = this.props;
-    const amt = (this.state || {}).amt || defaultFundAmt;
-    return (
-      <div>
-        <h2>Fund account</h2>
-        <br />
-        Balance: {bal} {standardUnit}
-        <hr />
-        Would you like to fund your account with additional {standardUnit}?
-        <br />
-        (This only works on certain devnets)
-        <br />
-        <input
-          type='number'
-          placeholder={defaultFundAmt}
-          onChange={(e) => this.setState({amt: e.currentTarget.value})}
-        />
-        <button onClick={() => parent.fundAccount(amt)}>Fund Account</button>
-        <button onClick={() => parent.skipFundAccount()}>Skip</button>
-      </div>
-    );
-  }
-}
 
-exports.DeployerOrAttacher = class extends React.Component {
+exports.SignUpAccount = class extends React.Component {
   render() {
-    const {parent} = this.props;
-    return (
+     return (
       <div>
-        Please select a role:
-        <br />
-        <p>
-          <button
-            onClick={() => parent.selectDeployer()}
-          >Deployer</button>
-          <br /> Set the wager, deploy the contract.
-        </p>
-        <p>
-          <button
-            onClick={() => parent.selectAttacher()}
-          >Attacher</button>
-          <br /> Attach to the Deployer's contract.
-        </p>
+        <label>Name</label>
+        <input 
+        type='text'
+        placeholder='Enter Your Name'
+        />
+        <label>Email</label>
+        <input 
+        type='text'
+        placeholder='Enter Your Email'
+        />
+        <label>Password</label>
+        <input 
+        type='password'
+        placeholder='Enter Your Password'
+        />
+        <label>Confirm Password</label>
+        <input 
+        type='text'
+        placeholder='Confirm Password'
+        />
+        <button> Register </button>
       </div>
-    );
+     )
   }
 }
 
 
 export default exports;
+
+// const AppViews = () => {
+//     useState
+//     return (
+//       <div className="App">
+//         <header className="App-header" id="root">
+//           <h1>Place your RSVP</h1>
+//           {content}
+//           <label>Name</label>
+//           <input 
+//             type="text"
+        
+//           />
+//           <label>Password</label>
+//           <input 
+//             type="text"
+        
+//           />
+//           <label>Confirm password</label>
+//           <input 
+//             type="text"
+        
+//           />
+//           <button>Submit</button>
+          
+//         </header>
+//       </div>
+//     );
+//   }
+
