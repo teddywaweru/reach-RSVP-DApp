@@ -1,4 +1,5 @@
 div {
+    font-family: 'Courier New', Courier, monospace;
     background-color: antiquewhite;
     display: flex;
     justify-content: center;

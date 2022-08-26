@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/AppViews.css';
+import  RSVPTickets from "./RSVPTickets.json";
 
 const exports = {};
 
@@ -12,7 +13,7 @@ exports.Wrapper = class extends React.Component {
     return (
       <div className="App">
         <header className="App-header" id="root">
-          <h1>Place your RSVP</h1>
+          <h1>Welcome here. Book your RSVP</h1>
           {content}
         </header>
       </div>
@@ -67,11 +68,58 @@ exports.FundAccount = class extends React.Component {
 }
 
 exports.DeployerOrAttacher = class extends React.Component {
+
+  checkIsTaken(isTaken){
+    if(isTaken===true) {
+      return(
+        <div>
+          Taken
+        </div>
+      )
+    } else{
+            return(
+              <div>
+                Available
+              </div>
+            )
+    }
+  }
   render() {
     const {parent} = this.props;
+
     return (
-      <div>
-        Please select a role:
+        <div>
+        <p>
+        Here's a list of events that are currently available in our system
+        </p>
+        <br />
+        <table>
+          <thead>
+            <tr>
+              <th>TicketNumber</th>
+              <th>Event Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              RSVPTickets.events.map
+              ((RSVP, idx) =>
+                (
+                  <tr>
+                    <td>{RSVP.ticketID}</td>
+                    <td>{RSVP.eventName}</td>
+                    <td>
+                      <button onClick={() =>clicked(idx)}>
+                      {this.checkIsTaken(RSVP.isTaken)}
+                      </button>
+                    </td>
+                  </tr>
+                )
+              )
+            }
+          </tbody>
+        </table>
+        {/* Please select a role:
         <br />
         <p>
           <button
@@ -84,11 +132,13 @@ exports.DeployerOrAttacher = class extends React.Component {
             onClick={() => parent.selectAttacher()}
           >Attacher</button>
           <br /> Attach to the Deployer's contract.
-        </p>
+        </p> */}
       </div>
     );
   }
 }
 
-
+function clicked(idx) {
+  console.log(`clicked ${idx}`);
+}
 export default exports;

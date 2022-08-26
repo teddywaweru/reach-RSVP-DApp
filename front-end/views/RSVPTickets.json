@@ -1,0 +1,96 @@
+{
+    "events" :
+    [
+    {
+        "ticketID": "001",
+        "eventName": "Inaugural Ball",
+        "eventmotto": "Official Meeting",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "002",
+        "eventName": "Inaugural Ball",
+        "eventmotto": "Official Meeting",
+        "isTaken": true,
+        "eventToken": null
+    },
+    {
+        "ticketID": "003",
+        "eventName": "Inaugural Ball",
+        "eventmotto": "Official Meeting",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "004",
+        "eventName": "Inaugural Ball",
+        "eventmotto": "Official Meeting",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "001",
+        "eventName": "Louvre Art Display",
+        "eventmotto": "Art is Fart",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "002",
+        "eventName": "Louvre Art Display",
+        "eventmotto": "Art is Fart",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "003",
+        "eventName": "Louvre Art Display",
+        "eventmotto": "Art is Fart",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "004",
+        "eventName": "Louvre Art Display",
+        "eventmotto": "Art is Fart",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "001",
+        "eventName": "Summer Party",
+        "eventmotto": "Where's yo Bikini??",
+        "isTaken": true,
+        "eventToken": null
+    },
+    {
+        "ticketID": "002",
+        "eventName": "Summer Party",
+        "eventmotto": "Where's yo Bikini??",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "003",
+        "eventName": "Summer Party",
+        "eventmotto": "Where's yo Bikini??",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "004",
+        "eventName": "Summer Party",
+        "eventmotto": "Where's yo Bikini??",
+        "isTaken": false,
+        "eventToken": null
+    },
+    {
+        "ticketID": "004",
+        "eventName": "Summer Party",
+        "eventmotto": "Where's yo Bikini??",
+        "isTaken": true,
+        "eventToken": null
+    }
+]
+}

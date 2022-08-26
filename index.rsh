@@ -3,6 +3,7 @@
 // define Participant
 const RSVPParticipant = {
   getReceipt: Fun([UInt], Null),
+  // ...hasConsoleLogger
 };
 
 // define main function
@@ -22,6 +23,8 @@ export const main = Reach.App(() => {
   init();
 
   Buyer.only(() => {
+    // interact.log('here');
+
     const wantedTokens = declassify(interact.wantsTokens());
   });
   Buyer.publish(wantedTokens);
@@ -41,6 +44,10 @@ export const main = Reach.App(() => {
   });
   Buyer.pay(currTokenCost);
 
+  // the seller places commitment
+  // confirm the token/ticket during event
+  // transfer payment.
+
   transfer(currTokenCost).to(Seller);
   commit();
 
@@ -58,8 +65,3 @@ export const main = Reach.App(() => {
 
 });
 
-
-
-// define actions for Alice
-
-// Define responses from back-end
