@@ -109,7 +109,7 @@ exports.DeployerOrAttacher = class extends React.Component {
                     <td>{RSVP.ticketID}</td>
                     <td>{RSVP.eventName}</td>
                     <td>
-                      <button onClick={() =>clicked(idx)}>
+                      <button onClick={() =>parent.RSVPQuery(idx)}>
                       {this.checkIsTaken(RSVP.isTaken)}
                       </button>
                     </td>

@@ -3,6 +3,7 @@
 // define Participant
 const RSVPParticipant = {
   getReceipt: Fun([UInt], Null),
+  wantsRSVPecho: Fun([UInt],UInt)
   // ...hasConsoleLogger
 };
 
@@ -10,37 +11,41 @@ const RSVPParticipant = {
 export const main = Reach.App(() => {
   const Buyer = Participant('Buyer',{
     ...RSVPParticipant,
-    wantsTokens: Fun([],UInt),
-    acceptTokenCost: Fun([UInt],Null)
+    wantsRSVP: Fun([],UInt),
+    acceptRSVPCost: Fun([UInt],Null)
   });
   
   const Seller = Participant('Seller', {
     ...RSVPParticipant,
-    hasTokens: Fun([], UInt),
+    tokenCost: Fun([], UInt),
     currTokenCost: Fun([], UInt),
     confirmInventory: Fun([UInt],Null)
   });
   init();
 
   Buyer.only(() => {
-    // interact.log('here');
 
-    const wantedTokens = declassify(interact.wantsTokens());
+    const wantedRSVP = declassify(interact.wantsRSVP());
   });
-  Buyer.publish(wantedTokens);
+  Buyer.publish(wantedRSVP);
 
   commit();
+
+  // each([Buyer, Seller], () => {
+  //   const x = declassify(interact.wantsRSVPecho(wantedRSVP))
+  // })
 
   Seller.only(() => {
-    const sellerTokens = declassify(interact.hasTokens());
-    const currTokenCost = declassify(interact.currTokenCost());
+    const currTokenCost = declassify(interact.tokenCost());
   });
-  Seller.publish(currTokenCost,sellerTokens);
+  Seller.publish(currTokenCost);
 
   commit();
 
+
+
   Buyer.only(() => {
-    declassify(interact.acceptTokenCost(currTokenCost));
+    declassify(interact.acceptRSVPCost(currTokenCost));
   });
   Buyer.pay(currTokenCost);
 
@@ -52,15 +57,15 @@ export const main = Reach.App(() => {
   commit();
 
         
-  const totalTokenCost = wantedTokens * currTokenCost;
-  const remTokens = sellerTokens - wantedTokens;
+  const totalTokenCost = wantedRSVP * currTokenCost;
+  // const remTokens = sellerTokens - wantedRSVP;
 
   Buyer.only( () => {
     interact.getReceipt(totalTokenCost);
   })
 
   Seller.only(() => {
-    interact.confirmInventory(remTokens);
+    interact.confirmInventory(currTokenCost);
   })
 
 });
