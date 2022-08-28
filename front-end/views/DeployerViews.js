@@ -21,15 +21,6 @@ exports.Wrapper = class extends React.Component {
   }
 }
 
-// exports.WantsTokens = class extends React.Component {
-//   render() {
-//     return(
-//       <div>
-//         <p>stuuuuff</p>
-//       </div>
-//     );
-//   }
-// }
 
 exports.WantsRSVP = class extends React.Component {
   render() {
@@ -67,25 +58,6 @@ exports.WantsRSVP = class extends React.Component {
     );
   }
 }
-// exports.SetWager = class extends React.Component {
-//   render() {
-//     const {parent, defaultWager, standardUnit} = this.props;
-//     const wager = (this.state || {}).wager || defaultWager;
-//     return (
-//       <div>
-//         <input
-//           type='number'
-//           placeholder={defaultWager}
-//           onChange={(e) => this.setState({wager: e.currentTarget.value})}
-//         /> {standardUnit}
-//         <br />
-//         <button
-//           onClick={() => parent.setWager(wager)}
-//         >Set wager</button>
-//       </div>
-//     );
-//   }
-// }
 
 exports.Deploy = class extends React.Component {
   render() {
@@ -171,10 +143,10 @@ exports.SellerJoined = class extends React.Component {
 exports.AcceptCost = class extends React.Component {
   render(){
     const {RSVPCost} = this.props;
+    console.log(`${RSVPCost}`)
     return(
       <div>
-        Do you accept the cost of 
-        {RSVPCost}
+        Do you accept the cost of: {RSVPCost}
         <button>
           Yes
         </button>
