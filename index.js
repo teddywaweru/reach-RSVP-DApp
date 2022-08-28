@@ -47,24 +47,18 @@ class App extends React.Component {
 }
 
 
-class Person extends React.Component {
-  random() { return reach.hasRandom.random(); }
-  async getHand() { // Fun([], UInt)
 
-    return;
-  }
-  seeOutcome(i) { this.setState({view: 'Done', outcome: intToOutcome[i]}); }
-}
-
-class Participant extends Person {
+class Participant extends React.Component {
   constructor(props) {
     super(props);
     this.state = {view: 'WantsRSVP'};
   }
+  //returns index of selected product
   wantsRSVP(){
     console.log(("wantsRSVP"));
     return this.props.idx;}
 
+  //initiates backend.Buyer
   async deploy() {
     console.log((`${this.props.idx}`));
 
@@ -76,42 +70,48 @@ class Participant extends Person {
 
     this.setState({view: 'WaitingForAttacher', ctcInfoStr});
     
-    this.attach(ctcInfoStr);
+    this.attach(ctcInfoStr); 
+  }
+
+  
+  // intiate backend.Seller & attach to contract
+  attach(ctcInfoStr) {
+    const ctc = this.props.acc.contract(backend, JSON.parse(ctcInfoStr));
+    console.log(`Attaching to: ${ctcInfoStr}`);
+      backend.Seller(ctc, this);
+      this.setState({view: 'SellerJoined'})
+    }
     
+    // return cost of RSVP 
+    RSVPCost() {
+    console.log("Getting Cost for RSVP");
+    return (reach.parseCurrency(10));
+  }
+  
+  // accept RSVP Cost
+  acceptRSVPCost(cost){
+    let RSVPCost = reach.formatCurrency(cost)
+    console.log(`acceptRSVPCost: ${RSVPCost}`)
+    this.setState({view: 'AcceptCost', RSVPCost });
+    return
     
   }
 
+  //return receipt for buyer else next procedure
   getReceipt([cost, wantedRSVP]) {
 
-    console.log("getReceipt")
+    console.log("Getting Buyer's Receipt")
     console.log(`${cost}`)
     console.log(`${wantedRSVP}`)
     this.setState({view: "Done",cost,wantedRSVP})
+    console.log("Application completed. Requires reload.")
     return
   }
-
+  
+  //intended for backend.Seller to update intentory with details 
   confirmInventory(v) {
     // TODO
     return
-  }
-
-  attach(ctcInfoStr) {
-      const ctc = this.props.acc.contract(backend, JSON.parse(ctcInfoStr));
-      console.log(`${ctcInfoStr}`);
-      backend.Seller(ctc, this);
-      this.setState({view: 'SellerJoined'})
-  }
-
-  RSVPCost() {
-    return (reach.parseCurrency(10));
-  }
-
-  acceptRSVPCost(cost){
-    let RSVPCost = reach.formatCurrency(cost)
-    console.log(`acceptRSVPCost: ${reach.formatCurrency(RSVPCost)}`)
-    this.setState({view: 'AcceptCost', RSVPCost });
-    return
-
   }
   render() { return renderView(this, DeployerViews); }
 }
@@ -120,11 +120,4 @@ renderDOM(<App />);
 
 
 
-
-//show list of products
-//select prouct
-//seller generates contract that links to the product
-//buyer attaches
-//buyer pays
-//transfer funds to seller, store transaction hex.
 

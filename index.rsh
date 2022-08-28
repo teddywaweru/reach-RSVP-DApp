@@ -1,3 +1,11 @@
+//1. show list of products
+//2. Buyer selects product which initiates a contract
+//3. Seller backend attaches to contract that links to the product & offers price
+//4. Buyer accepts cost & pays
+//5. Transfer funds to seller, store contract hex for future comparison.
+//6. ...
+
+
 'reach 0.1';
 
 // define Participant
