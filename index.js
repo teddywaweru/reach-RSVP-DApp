@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+// import ReactDOM from 'react-dom/client';
 import AppViews from './front-end/views/AppViews';
 import DeployerViews from './front-end/views/DeployerViews';
-import AttacherViews from './front-end/views/AttacherViews';
+// import AttacherViews from './front-end/views/AttacherViews';
 
 import './index.css';
 import * as backend from './build/index.main.mjs';
@@ -98,9 +98,14 @@ class Deployer extends Player {
     
   }
 
-  getReceipt(v) {
+  getReceipt([cost, wantedRSVP]) {
+
     // TODO
     console.log("getReceipt")
+    console.log(`${cost}`)
+    console.log(`${wantedRSVP}`)
+    // this.setState(state)
+    this.setState({view: "Done",cost,wantedRSVP})
     return
   }
 
@@ -114,15 +119,17 @@ class Deployer extends Player {
       console.log(`${ctcInfoStr}`);
       // this.setState({view: 'Attaching'});
       backend.Seller(ctc, this);
-      this.setState({view: 'WaitingForAttacher_2'})
+      this.setState({view: 'SellerJoined'})
   }
 
-  tokenCost() {
+  RSVPCost() {
     return (reach.parseCurrency(10));
   }
 
   acceptRSVPCost(RSVPCost){
-    console.log(`acceptRSVPcOST: ${RSVPCost}`)
+    console.log(`acceptRSVPCost: ${reach.formatCurrency(RSVPCost)}`)
+    let RSVPCost_dup = reach.formatCurrency(RSVPCost)
+    this.setState({view: 'AcceptCost', RSVPCost_dup });
     return
 
   }
@@ -137,28 +144,28 @@ class Deployer extends Player {
   // }
   render() { return renderView(this, DeployerViews); }
 }
-class Attacher extends Player {
-  constructor(props) {
-    super(props);
-    // this.state = {view: 'Attach'};
-  }
-  attach(ctcInfoStr) {
-    const ctc = this.props.acc.contract(backend, JSON.parse(ctcInfoStr));
-    // this.setState({view: 'Attaching'});
-    backend.Seller(ctc, this);
-  }
-  async acceptWager(wagerAtomic) { // Fun([UInt], Null)
-    const wager = reach.formatCurrency(wagerAtomic, 4);
-    return await new Promise(resolveAcceptedP => {
-      this.setState({view: 'AcceptTerms', wager, resolveAcceptedP});
-    });
-  }
-  termsAccepted() {
-    this.state.resolveAcceptedP();
-    this.setState({view: 'WaitingForTurn'});
-  }
-  render() { return renderView(this, AttacherViews); }
-}
+// class Attacher extends Player {
+//   constructor(props) {
+//     super(props);
+//     // this.state = {view: 'Attach'};
+//   }
+//   attach(ctcInfoStr) {
+//     const ctc = this.props.acc.contract(backend, JSON.parse(ctcInfoStr));
+//     // this.setState({view: 'Attaching'});
+//     backend.Seller(ctc, this);
+//   }
+//   async acceptWager(wagerAtomic) { // Fun([UInt], Null)
+//     const wager = reach.formatCurrency(wagerAtomic, 4);
+//     return await new Promise(resolveAcceptedP => {
+//       this.setState({view: 'AcceptTerms', wager, resolveAcceptedP});
+//     });
+//   }
+//   termsAccepted() {
+//     this.state.resolveAcceptedP();
+//     this.setState({view: 'WaitingForTurn'});
+//   }
+//   render() { return renderView(this, AttacherViews); }
+// }
 
 
 renderDOM(<App />);

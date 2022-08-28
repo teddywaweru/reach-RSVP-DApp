@@ -71,17 +71,24 @@ exports.DeployerOrAttacher = class extends React.Component {
 
   checkIsTaken(isTaken){
     if(isTaken===true) {
-      return(
-        <div>
-          Taken
-        </div>
-      )
-    } else{
-            return(
-              <div>
-                Available
-              </div>
-            )
+      let disabled = true,
+          text = <div>Taken</div>;
+          return text;
+        } else{
+          let disabled = false,
+          text = <div>Available</div>;
+            return text;
+    }
+  }
+  disableIsTaken(isTaken){
+    if(isTaken===true) {
+      // let disabled = true,
+      //     text = <div>Taken</div>;
+          return true;
+        } else{
+          // let disabled = false,
+          // text = <div>Available</div>;
+            return false;
     }
   }
   render() {
@@ -104,17 +111,18 @@ exports.DeployerOrAttacher = class extends React.Component {
             {
               RSVPTickets.events.map
               ((RSVP, idx) =>
-                (
+              (
                   <tr>
                     <td>{RSVP.ticketID}</td>
                     <td>{RSVP.eventName}</td>
                     <td>
-                      <button onClick={() =>parent.RSVPQuery(idx)}>
+                      <button onClick={() =>parent.RSVPQuery(idx)}
+                      disabled={this.disableIsTaken(RSVP.isTaken)}>
                       {this.checkIsTaken(RSVP.isTaken)}
                       </button>
                     </td>
                   </tr>
-                )
+              )
               )
             }
           </tbody>

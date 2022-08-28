@@ -2,7 +2,7 @@
 
 // define Participant
 const RSVPParticipant = {
-  getReceipt: Fun([UInt], Null),
+  getReceipt: Fun([Tuple(UInt,UInt)], Null),
   wantsRSVPecho: Fun([UInt],UInt)
   // ...hasConsoleLogger
 };
@@ -17,8 +17,8 @@ export const main = Reach.App(() => {
   
   const Seller = Participant('Seller', {
     ...RSVPParticipant,
-    tokenCost: Fun([], UInt),
-    currTokenCost: Fun([], UInt),
+    RSVPCost: Fun([], UInt),
+    currRSVPCost: Fun([], UInt),
     confirmInventory: Fun([UInt],Null)
   });
   init();
@@ -36,37 +36,36 @@ export const main = Reach.App(() => {
   // })
 
   Seller.only(() => {
-    const currTokenCost = declassify(interact.tokenCost());
+    const currRSVPCost = declassify(interact.RSVPCost());
   });
-  Seller.publish(currTokenCost);
+  Seller.publish(currRSVPCost);
 
   commit();
 
 
 
   Buyer.only(() => {
-    declassify(interact.acceptRSVPCost(currTokenCost));
+    declassify(interact.acceptRSVPCost(currRSVPCost));
   });
-  Buyer.pay(currTokenCost);
+  Buyer.pay(currRSVPCost);
 
   // the seller places commitment
   // confirm the token/ticket during event
   // transfer payment.
 
-  transfer(currTokenCost).to(Seller);
+  transfer(currRSVPCost).to(Seller);
   commit();
 
         
-  const totalTokenCost = wantedRSVP * currTokenCost;
+  const totalTokenCost = wantedRSVP * currRSVPCost;
   // const remTokens = sellerTokens - wantedRSVP;
 
   Buyer.only( () => {
-    interact.getReceipt(totalTokenCost);
+    interact.getReceipt([totalTokenCost, wantedRSVP]);
   })
 
   Seller.only(() => {
-    interact.confirmInventory(currTokenCost);
+    interact.confirmInventory(currRSVPCost);
   })
 
 });
-

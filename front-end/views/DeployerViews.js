@@ -139,7 +139,7 @@ exports.WaitingForAttacher = class extends React.Component {
     )
   }
 }
-exports.WaitingForAttacher_2 = class extends React.Component {
+exports.SellerJoined = class extends React.Component {
   // async copyToClipboard(button) {
   //   const {ctcInfoStr} = this.props;
   //   navigator.clipboard.writeText(ctcInfoStr);
@@ -156,7 +156,7 @@ exports.WaitingForAttacher_2 = class extends React.Component {
     return (
       <div>
         Seller has joined
-        <br /> The published cost for the RSVP is:
+        <br /> The RSVP's contract is captured as:
         <pre className='ContractInfo'>
           {ctcInfoStr}
         </pre>
@@ -165,6 +165,42 @@ exports.WaitingForAttacher_2 = class extends React.Component {
         >Copy to clipboard</button> */}
       </div>
     )
+  }
+}
+
+exports.AcceptCost = class extends React.Component {
+  render(){
+    const {RSVPCost} = this.props;
+    return(
+      <div>
+        Do you accept the cost of 
+        {RSVPCost}
+        <button>
+          Yes
+        </button>
+        <button disabled={true}>
+          No
+        </button>
+      </div>
+    );
+  }
+}
+
+exports.Done = class extends React.Component {
+  render() {
+    const { cost, wantedRSVP } = this.props;
+
+    var RSVP = RSVPTickets.events[wantedRSVP]
+    return(
+      <div>
+        {RSVP.eventName}
+        <p>
+        </p>
+        <p>Transaction Completed.</p>
+      </div>
+
+
+    );
   }
 }
 
